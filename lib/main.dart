@@ -13,21 +13,60 @@ class HomeRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('First Route'),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          child: const Text('Open route'),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const WriteADiaryRoute()),
-            );
-          },
+    return MaterialApp(
+      home: Scaffold(
+        body: SafeArea(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'Turing The Page',
+                  style: TextStyle(),
+                ),
+                ElevatedButton(
+                  child: const Text('Write A Dairy'),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const WriteADiaryRoute()));
+                  },
+                ),
+                ElevatedButton(
+                  child: const Text('To-do List'),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const WriteADiaryRoute()));
+                  },
+                ),
+                ElevatedButton(
+                  child: const Text('Calender'),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const WriteADiaryRoute()));
+                  },
+                ),
+              ],
+            ),
+          ),
         ),
       ),
+      // body: Center(
+      //   child: ElevatedButton(
+      //     child: const Text('Open route'),
+      //     onPressed: () {
+      //       Navigator.push(
+      //         context,
+      //         MaterialPageRoute(builder: (context) => const WriteADiaryRoute()),
+      //       );
+      //     },
+      //   ),
+      // ),
     );
   }
 }

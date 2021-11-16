@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'writeatodo.dart';
+import 'calender.dart';
 import 'writeadiary.dart';
 
 void main() {
@@ -42,18 +44,18 @@ class HomeRoute extends StatelessWidget {
                     );
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black),
+                    // backgroundColor: MaterialStateProperty.all(Colors.black),
                     shape: MaterialStateProperty.all(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
                       ),
                     ),
-                    padding: MaterialStateProperty.all(
-                      EdgeInsets.all(30),
-                    ),
-                    textStyle: MaterialStateProperty.all(
-                      TextStyle(fontSize: 30),
-                    ),
+                    // padding: MaterialStateProperty.all(
+                    //   EdgeInsets.all(30),
+                    // ),
+                    // textStyle: MaterialStateProperty.all(
+                    //   TextStyle(fontSize: 30),
+                    // ),
                   ),
                 ),
                 ElevatedButton(
@@ -62,8 +64,16 @@ class HomeRoute extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const WriteADiaryRoute()));
+                            builder: (context) => const WriteATodo()));
                   },
+                  style: ButtonStyle(
+                    // backgroundColor: MaterialStateProperty.all(Colors.black),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ),
+                  ),
                 ),
                 ElevatedButton(
                   child: const Text('Calender'),
@@ -71,8 +81,16 @@ class HomeRoute extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const WriteADiaryRoute()));
+                            builder: (context) => const Calender()));
                   },
+                  style: ButtonStyle(
+                    // backgroundColor: MaterialStateProperty.all(Colors.black),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

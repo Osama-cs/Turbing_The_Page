@@ -97,17 +97,6 @@ class HomeRoute extends StatelessWidget {
           ),
         ),
       ),
-      // body: Center(
-      //   child: ElevatedButton(
-      //     child: const Text('Open route'),
-      //     onPressed: () {
-      //       Navigator.push(
-      //         context,
-      //         MaterialPageRoute(builder: (context) => const WriteADiaryRoute()),
-      //       );
-      //     },
-      //   ),
-      // ),
     );
   }
 }

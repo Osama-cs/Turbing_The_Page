@@ -1,13 +1,8 @@
-/// Flutter code sample for BottomNavigationBar
-
-// This example shows a [BottomNavigationBar] as it is used within a [Scaffold]
-// widget. The [BottomNavigationBar] has three [BottomNavigationBarItem]
-// widgets, which means it defaults to [BottomNavigationBarType.fixed], and
-// the [currentIndex] is set to index 0. The selected item is
-// amber. The `_onItemTapped` function changes the selected item's index
-// and displays a corresponding message in the center of the [Scaffold].
-
 import 'package:flutter/material.dart';
+import 'package:individualproject/main.dart';
+import 'writeadiary.dart';
+import 'writeatodo.dart';
+import 'calender.dart';
 
 void main() => runApp(const Calender());
 
@@ -37,21 +32,11 @@ class MyStatefulWidget extends StatefulWidget {
 /// This is the private State class that goes with MyStatefulWidget.
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
+  final List<Widget> _widgetOptions = <Widget>[
+    const HomeRoute(),
+    const WriteADiaryRoute(),
+    const WriteATodo(),
+    const Calender(),
   ];
 
   void _onItemTapped(int index) {
@@ -70,24 +55,32 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.lightBlueAccent.shade100,
+        iconSize: 30,
+        // showSelectedLabels: false,
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list_alt_rounded),
-            label: 'To-do',
-          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
+            backgroundColor: Colors.lightBlueAccent,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.import_contacts_rounded),
-            label: 'Dairy',
+            icon: Icon(Icons.menu_book_rounded),
+            label: 'Diary',
+            backgroundColor: Colors.lightBlueAccent,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list_alt_rounded),
+            label: 'To-Do List',
+            backgroundColor: Colors.lightBlueAccent,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today_rounded),
+            label: 'Calendar',
+            backgroundColor: Colors.lightBlueAccent,
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Colors.yellow,
         onTap: _onItemTapped,
       ),
     );

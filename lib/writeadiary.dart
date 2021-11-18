@@ -10,6 +10,9 @@ class WriteADiaryRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.lightBlueAccent.shade100,
+      ),
       backgroundColor: Colors.lightBlueAccent.shade100,
       // bottomNavigationBar: BottomNavigationBar(
       //   items: const <BottomNavigationBarItem>[
@@ -22,9 +25,9 @@ class WriteADiaryRoute extends StatelessWidget {
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text(
-                'Turning The Page',
+            children: const <Widget>[
+              Text(
+                'Turning The Page 1',
                 style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 40.0,

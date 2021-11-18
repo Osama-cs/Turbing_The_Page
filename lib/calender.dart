@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:individualproject/main.dart';
-import 'writeadiary.dart';
-import 'writeatodo.dart';
-import 'calender.dart';
 
 void main() => runApp(const Calender());
 

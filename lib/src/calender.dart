@@ -12,13 +12,6 @@ class Calender extends StatelessWidget {
         backgroundColor: Colors.lightBlueAccent.shade100,
       ),
       backgroundColor: Colors.lightBlueAccent.shade100,
-      // bottomNavigationBar: BottomNavigationBar(
-      //   items: const <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //     ),
-      //   ],
-      // ),
       body: SafeArea(
         child: Center(
           child: Column(

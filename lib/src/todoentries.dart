@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:individualproject/src/writeatodolist.dart';
 
 void main() {
   runApp(const TodoEntries());
@@ -10,6 +11,18 @@ class TodoEntries extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const WriteATodoList(),
+            ),
+          );
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Colors.yellow,
+      ),
       appBar: AppBar(
         backgroundColor: Colors.lightBlueAccent.shade100,
       ),

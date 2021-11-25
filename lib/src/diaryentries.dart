@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'writeadiary.dart';
+
 void main() {
   runApp(const DiaryEntries());
 }
@@ -10,22 +12,27 @@ class DiaryEntries extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const WriteADiary(),
+            ),
+          );
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Colors.yellow,
+      ),
       appBar: AppBar(
         backgroundColor: Colors.lightBlueAccent.shade100,
       ),
       backgroundColor: Colors.lightBlueAccent.shade100,
-      // bottomNavigationBar: BottomNavigationBar(
-      //   items: const <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //     ),
-      //   ],
-      // ),
       body: SafeArea(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const <Widget>[
+            children: <Widget>[
               Text(
                 'Turning The Page 1',
                 style: TextStyle(
@@ -33,7 +40,6 @@ class DiaryEntries extends StatelessWidget {
                     fontSize: 40.0,
                     fontWeight: FontWeight.bold),
               ),
-              MyCustomForm(),
             ],
           ),
         ),

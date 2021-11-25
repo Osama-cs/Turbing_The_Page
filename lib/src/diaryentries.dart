@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const WriteADiaryRoute());
+  runApp(const DiaryEntries());
 }
 
-class WriteADiaryRoute extends StatelessWidget {
-  const WriteADiaryRoute({Key? key}) : super(key: key);
+class DiaryEntries extends StatelessWidget {
+  const DiaryEntries({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

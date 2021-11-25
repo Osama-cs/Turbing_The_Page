@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:individualproject/src/calender.dart';
+import '/src/homepage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -97,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const Calender()),
+                                  builder: (context) => const HomePage()),
                             );
                           }
                         },

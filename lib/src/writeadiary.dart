@@ -1,6 +1,5 @@
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
-import 'package:individualproject/src/diaryentries.dart';
 import 'package:individualproject/src/homepage.dart';
 
 class WriteADiary extends StatefulWidget {

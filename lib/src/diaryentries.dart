@@ -6,9 +6,14 @@ void main() {
   runApp(const DiaryEntries());
 }
 
-class DiaryEntries extends StatelessWidget {
+class DiaryEntries extends StatefulWidget {
   const DiaryEntries({Key? key}) : super(key: key);
 
+  @override
+  _DiaryEntriesState createState() => _DiaryEntriesState();
+}
+
+class _DiaryEntriesState extends State<DiaryEntries> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,9 +37,9 @@ class DiaryEntries extends StatelessWidget {
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
+            children: const <Widget>[
               Text(
-                'Turning The Page 1',
+                'Turning The Page 2',
                 style: TextStyle(
                     fontFamily: 'Inter',
                     fontSize: 40.0,

@@ -12,6 +12,12 @@ class WriteADiary extends StatefulWidget {
 class _WriteADiaryState extends State<WriteADiary> {
   final _formKey2 = GlobalKey<FormState>();
 
+  bool _isProcessing = false;
+
+  final TextEditingController _timeController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -35,26 +41,32 @@ class _WriteADiaryState extends State<WriteADiary> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: DateTimeFormField(
-                          decoration: const InputDecoration(
-                            hintText: 'date',
-                            suffixIcon: Icon(Icons.event_note),
-                            hintStyle: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey,
+                          padding: const EdgeInsets.all(10.0),
+                          child: TextFormField(
+                            controller: _timeController,
+                            decoration: const InputDecoration(
+                              labelText: "what is the date you want to enter",
+                              hintText: "date",
+                              // suffixIcon: Icon(Icons.event_note),
+                              hintStyle: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.grey,
+                              ),
                             ),
-                          ),
-                          mode: DateTimeFieldPickerMode.date,
-                          autovalidateMode: AutovalidateMode.always,
-                          validator: (value) {
-                            if (value == null) {
-                              return 'Please enter a date';
-                            }
-                          },
-                        ),
-                      ),
+                            onTap: () async {
+                              DateTime date = DateTime(1900);
+                              FocusScope.of(context).requestFocus(FocusNode());
+
+                              date = (await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(1900),
+                                  lastDate: DateTime(2100)))!;
+
+                              _timeController.text = date.toIso8601String();
+                            },
+                          )),
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: TextFormField(
@@ -99,11 +111,7 @@ class _WriteADiaryState extends State<WriteADiary> {
                           if (_formKey2.currentState!.validate()) {
                             // ScaffoldMessenger.of(context).showSnackBar(
                             //     const SnackBar(content: Text('Logging In')),
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const HomePage()),
-                            );
+                            Navigator.of(context).pop();
                           }
                         },
                         child: const Text('Submit'),
@@ -119,3 +127,11 @@ class _WriteADiaryState extends State<WriteADiary> {
     );
   }
 }
+
+// hintText: 'date',
+// suffixIcon: Icon(Icons.event_note),
+// hintStyle: TextStyle(
+//   fontSize: 16,
+//   fontWeight: FontWeight.w600,
+//   color: Colors.grey,
+// ),

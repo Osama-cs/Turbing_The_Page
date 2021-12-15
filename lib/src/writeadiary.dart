@@ -1,5 +1,6 @@
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
+import 'package:individualproject/db/database_provider.dart';
 import 'package:individualproject/src/homepage.dart';
 
 class WriteADiary extends StatefulWidget {
@@ -48,7 +49,7 @@ class _WriteADiaryState extends State<WriteADiary> {
                               labelText: "what is the date you want to enter",
                               hintText: "date",
                               // suffixIcon: Icon(Icons.event_note),
-                              hintStyle: TextStyle(
+                              labelStyle: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.grey,
@@ -70,6 +71,7 @@ class _WriteADiaryState extends State<WriteADiary> {
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: TextFormField(
+                          controller: _titleController,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your title';
@@ -88,6 +90,7 @@ class _WriteADiaryState extends State<WriteADiary> {
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: TextFormField(
+                          controller: _descriptionController,
                           keyboardType: TextInputType.multiline,
                           minLines: 1,
                           maxLines: 3,
@@ -106,16 +109,38 @@ class _WriteADiaryState extends State<WriteADiary> {
                           ),
                         ),
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (_formKey2.currentState!.validate()) {
-                            // ScaffoldMessenger.of(context).showSnackBar(
-                            //     const SnackBar(content: Text('Logging In')),
-                            Navigator.of(context).pop();
-                          }
-                        },
-                        child: const Text('Submit'),
-                      ),
+                      _isProcessing
+                          ? const Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.white,
+                                ),
+                              ),
+                            )
+                          : ElevatedButton(
+                              onPressed: () async {
+                                if (_formKey2.currentState!.validate()) {
+                                  setState(() {
+                                    _isProcessing = true;
+                                  });
+
+                                  await database_provider.addItem(
+                                    diaryTime: _timeController.text,
+                                    diaryTitle: _titleController.text,
+                                    diaryDescription:
+                                        _descriptionController.text,
+                                  );
+
+                                  setState(() {
+                                    _isProcessing = false;
+                                  });
+
+                                  Navigator.of(context).pop();
+                                }
+                              },
+                              child: const Text('Submit'),
+                            ),
                     ],
                   ),
                 ),

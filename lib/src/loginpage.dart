@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import '/src/homepage.dart';
 
@@ -9,6 +10,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final FocusNode _uidFocusNode = FocusNode();
+  Future<FirebaseApp> _initializeFirebase() async {
+    FirebaseApp firebaseApp = await Firebase.initializeApp();
+
+    return firebaseApp;
+  }
+
   bool isHidden = false;
 
   final _formKey = GlobalKey<FormState>();
@@ -89,23 +97,41 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      ElevatedButton(
+                    ],
+                  ),
+                ),
+                FutureBuilder(
+                  future: _initializeFirebase(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Text('Error initializing Firebase');
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.done) {
+                      return ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             // ScaffoldMessenger.of(context).showSnackBar(
                             //     const SnackBar(content: Text('Logging In')),
+
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const HomePage()),
+                                  builder: (context) => HomePage(
+                                        focusNode: _uidFocusNode,
+                                      )),
                             );
                           }
                         },
                         child: const Text('Log in'),
+                      );
+                    }
+                    return CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Colors.white,
                       ),
-                    ],
-                  ),
-                ),
+                    );
+                  },
+                )
               ],
             ),
           ),

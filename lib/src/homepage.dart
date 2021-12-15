@@ -5,12 +5,7 @@ import '/src/diaryentries.dart';
 import '/src/aboutyou.dart';
 
 class HomePage extends StatefulWidget {
-  final FocusNode focusNode;
-
-  const HomePage({
-    Key? key,
-    required this.focusNode,
-  }) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();

@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:individualproject/src/signuppage.dart';
 import '/src/homepage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -10,14 +12,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final FocusNode _uidFocusNode = FocusNode();
-  Future<FirebaseApp> _initializeFirebase() async {
-    FirebaseApp firebaseApp = await Firebase.initializeApp();
-
-    return firebaseApp;
-  }
-
-  bool isHidden = false;
+  late String _email, _password;
+  final auth = FirebaseAuth.instance;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -57,20 +53,25 @@ class _LoginPageState extends State<LoginPage> {
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: TextFormField(
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your Email';
-                              }
-                            },
-                            decoration: const InputDecoration(
-                              hintText: 'Email',
-                              hintStyle: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.grey),
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
+                              keyboardType: TextInputType.emailAddress,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your Email';
+                                }
+                              },
+                              decoration: const InputDecoration(
+                                hintText: 'Email',
+                                hintStyle: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.grey),
+                                border: OutlineInputBorder(),
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  _email = value.trim();
+                                });
+                              }),
                         ),
                       ),
                       Container(
@@ -80,34 +81,28 @@ class _LoginPageState extends State<LoginPage> {
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: TextFormField(
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your Password';
-                              }
-                            },
-                            obscureText: isHidden,
-                            decoration: const InputDecoration(
-                              hintText: 'Password',
-                              hintStyle: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.grey),
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your Password';
+                                }
+                              },
+                              obscureText: true,
+                              decoration: const InputDecoration(
+                                hintText: 'Password',
+                                hintStyle: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.grey),
+                                border: OutlineInputBorder(),
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  _password = value.trim();
+                                });
+                              }),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                FutureBuilder(
-                  future: _initializeFirebase(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return Text('Error initializing Firebase');
-                    } else if (snapshot.connectionState ==
-                        ConnectionState.done) {
-                      return ElevatedButton(
+                      ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             // ScaffoldMessenger.of(context).showSnackBar(
@@ -116,22 +111,30 @@ class _LoginPageState extends State<LoginPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => HomePage(
-                                        focusNode: _uidFocusNode,
-                                      )),
+                                  builder: (context) => const HomePage()),
                             );
                           }
                         },
                         child: const Text('Log in'),
-                      );
-                    }
-                    return CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        Colors.white,
                       ),
-                    );
-                  },
-                )
+                      ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            // ScaffoldMessenger.of(context).showSnackBar(
+                            //     const SnackBar(content: Text('Logging In')),
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SignupPage()),
+                            );
+                          }
+                        },
+                        child: const Text('Sign up'),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

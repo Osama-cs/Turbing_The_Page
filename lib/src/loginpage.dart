@@ -14,6 +14,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  User? firebaseUser = FirebaseAuth.instance.currentUser;
+
   final auth = FirebaseAuth.instance;
 
   final TextEditingController _email = TextEditingController();
@@ -106,6 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                           ElevatedButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
+                                User? user = FirebaseAuth.instance.currentUser;
                                 final String email = _email.text.trim();
                                 final String password = _password.text.trim();
 

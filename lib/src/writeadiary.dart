@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_field/date_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:individualproject/db/database_provider.dart';
 import 'package:individualproject/src/homepage.dart';
@@ -121,19 +123,26 @@ class _WriteADiaryState extends State<WriteADiary> {
                           : ElevatedButton(
                               onPressed: () async {
                                 if (_formKey2.currentState!.validate()) {
-                                  setState(() {
-                                    _isProcessing = true;
-                                  });
+                                  final String diaryTime =
+                                      _timeController.text.trim();
+                                  final String diaryTitle =
+                                      _titleController.text.trim();
+                                  final String diaryDescription =
+                                      _descriptionController.text.trim();
+                                  User? user =
+                                      FirebaseAuth.instance.currentUser;
 
-                                  await database_provider.addItem(
-                                    diaryTime: _timeController.text,
-                                    diaryTitle: _titleController.text,
-                                    diaryDescription:
-                                        _descriptionController.text,
-                                  );
-
-                                  setState(() {
-                                    _isProcessing = false;
+                                  FirebaseFirestore.instance
+                                      .runTransaction((transaction) async {
+                                    await transaction.set(
+                                        FirebaseFirestore.instance
+                                            .collection("diaries")
+                                            .doc(user!.uid),
+                                        {
+                                          'diaryTime': diaryTime,
+                                          'diaryTitle': diaryTitle,
+                                          'diaryDescription': diaryDescription,
+                                        });
                                   });
 
                                   Navigator.of(context).pop();

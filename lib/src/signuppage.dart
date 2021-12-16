@@ -148,6 +148,7 @@ class _SignupPageState extends State<SignupPage> {
                             final String fullName = _fullname.text.trim();
                             final String email = _email.text.trim();
                             final String password = _password.text.trim();
+                            User? user = FirebaseAuth.instance.currentUser;
 
                             context
                                 .read<FirebaseService>()
@@ -156,8 +157,6 @@ class _SignupPageState extends State<SignupPage> {
                                   password,
                                 )
                                 .then((value) async {
-                              User? user = FirebaseAuth.instance.currentUser;
-
                               await FirebaseFirestore.instance
                                   .collection("users")
                                   .doc(user!.uid)

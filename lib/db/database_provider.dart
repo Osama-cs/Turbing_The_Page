@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-final CollectionReference _mainCollection = _firestore.collection('diary');
+final CollectionReference _userCollection = _firestore.collection('users');
 
 class database_provider {
   static String? userUid;
@@ -12,7 +12,7 @@ class database_provider {
     required String diaryDescription,
   }) async {
     DocumentReference documentReference =
-        _mainCollection.doc(userUid).collection('items').doc();
+        _userCollection.doc(userUid).collection('items').doc();
 
     Map<String, dynamic> data = <String, dynamic>{
       "diaryTime": diaryTime,
@@ -28,7 +28,7 @@ class database_provider {
 
   static Stream<QuerySnapshot> readItems() {
     CollectionReference notesItemCollection =
-        _mainCollection.doc(userUid).collection('items');
+        _userCollection.doc(userUid).collection('items');
 
     return notesItemCollection.snapshots();
   }
@@ -40,7 +40,7 @@ class database_provider {
     required String docId,
   }) async {
     DocumentReference documentReferencer =
-        _mainCollection.doc(userUid).collection('items').doc(docId);
+        _userCollection.doc(userUid).collection('items').doc(docId);
 
     Map<String, dynamic> data = <String, dynamic>{
       "diaryTime": diaryTime,
@@ -58,7 +58,7 @@ class database_provider {
     required String docId,
   }) async {
     DocumentReference documentReferencer =
-        _mainCollection.doc(userUid).collection('items').doc(docId);
+        _userCollection.doc(userUid).collection('items').doc(docId);
 
     await documentReferencer
         .delete()

@@ -159,9 +159,8 @@ class _SignupPageState extends State<SignupPage> {
                                 .then((value) async {
                               await FirebaseFirestore.instance
                                   .collection("users")
-                                  .doc(user!.uid)
-                                  .set({
-                                'uid': user.uid,
+                                  .add({
+                                'uid': user!.uid,
                                 'fullName': fullName,
                                 'email': email,
                                 'password': password,

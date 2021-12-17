@@ -132,17 +132,13 @@ class _WriteADiaryState extends State<WriteADiary> {
                                   User? user =
                                       FirebaseAuth.instance.currentUser;
 
-                                  FirebaseFirestore.instance
-                                      .runTransaction((transaction) async {
-                                    await transaction.set(
-                                        FirebaseFirestore.instance
-                                            .collection("diaries")
-                                            .doc(user!.uid),
-                                        {
-                                          'diaryTime': diaryTime,
-                                          'diaryTitle': diaryTitle,
-                                          'diaryDescription': diaryDescription,
-                                        });
+                                  await FirebaseFirestore.instance
+                                      .collection("diaries")
+                                      .add({
+                                    'uid': user!.uid,
+                                    'diaryTime': diaryTime,
+                                    'diaryTitle': diaryTitle,
+                                    'diaryDescription': diaryDescription,
                                   });
 
                                   Navigator.of(context).pop();

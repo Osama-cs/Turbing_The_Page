@@ -13,6 +13,12 @@ class WriteATodoList extends StatefulWidget {
 class _WriteATodoListState extends State<WriteATodoList> {
   final _formKey3 = GlobalKey<FormState>();
 
+  final TextEditingController _startOfActivityController =
+      TextEditingController();
+  final TextEditingController _endOfActivityController =
+      TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,7 +43,8 @@ class _WriteATodoListState extends State<WriteATodoList> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: DateTimeFormField(
+                        child: TextFormField(
+                          controller: _startOfActivityController,
                           decoration: const InputDecoration(
                             hintText:
                                 'what time should you start the activity?',
@@ -48,29 +55,14 @@ class _WriteATodoListState extends State<WriteATodoList> {
                               color: Colors.grey,
                             ),
                           ),
-                          mode: DateTimeFieldPickerMode.dateAndTime,
-                          autovalidateMode: AutovalidateMode.always,
-                          validator: (value) {
-                            if (value == null) {
-                              return 'Please enter a date';
-                            }
+                          onTap: () async {
+                            TimeOfDay time = TimeOfDay.now();
+
+                            time = (await showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay.now()))!;
+                            _startOfActivityController.text = time.toString();
                           },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: DateTimeFormField(
-                          decoration: const InputDecoration(
-                            hintText:
-                                'what time should you get this activity done?',
-                            suffixIcon: Icon(Icons.event_note),
-                            hintStyle: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          mode: DateTimeFieldPickerMode.dateAndTime,
                           autovalidateMode: AutovalidateMode.always,
                           validator: (value) {
                             if (value == null) {
@@ -82,6 +74,37 @@ class _WriteATodoListState extends State<WriteATodoList> {
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: TextFormField(
+                          controller: _endOfActivityController,
+                          decoration: const InputDecoration(
+                            hintText:
+                                'what time should you get this activity done?',
+                            suffixIcon: Icon(Icons.event_note),
+                            hintStyle: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          onTap: () async {
+                            TimeOfDay time = TimeOfDay.now();
+
+                            time = (await showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay.now()))!;
+                            _endOfActivityController.text = time.toString();
+                          },
+                          autovalidateMode: AutovalidateMode.always,
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Please enter a date';
+                            }
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: TextFormField(
+                          controller: _descriptionController,
                           keyboardType: TextInputType.multiline,
                           minLines: 1,
                           maxLines: 2,
@@ -100,20 +123,16 @@ class _WriteATodoListState extends State<WriteATodoList> {
                           ),
                         ),
                       ),
-                      // ElevatedButton(
-                      //   onPressed: () {
-                      //     if (_formKey3.currentState!.validate()) {
-                      //       // ScaffoldMessenger.of(context).showSnackBar(
-                      //       //     const SnackBar(content: Text('Logging In')),
-                      //       Navigator.push(
-                      //         context,
-                      //         MaterialPageRoute(
-                      //             builder: (context) => const HomePage()),
-                      //       );
-                      //     }
-                      //   },
-                      //   child: const Text('Submit'),
-                      // ),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (_formKey3.currentState!.validate()) {
+                            // ScaffoldMessenger.of(context).showSnackBar(
+                            //     const SnackBar(content: Text('Logging In')),
+                            Navigator.of(context).pop();
+                          }
+                        },
+                        child: const Text('Submit'),
+                      ),
                     ],
                   ),
                 ),

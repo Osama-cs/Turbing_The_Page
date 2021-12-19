@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'writeadiary.dart';
@@ -14,38 +16,60 @@ class DiaryEntries extends StatefulWidget {
 }
 
 class _DiaryEntriesState extends State<DiaryEntries> {
+  final Stream<QuerySnapshot> _diariesStream =
+      FirebaseFirestore.instance.collection('diaries').snapshots();
+  User? user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const WriteADiary(),
-            ),
-          );
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.yellow,
-      ),
-      appBar: AppBar(
-        backgroundColor: Colors.lightBlueAccent.shade100,
-      ),
-      backgroundColor: Colors.lightBlueAccent.shade100,
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const <Widget>[
-              Text(
-                'Turning The Page 2',
-                style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 40.0,
-                    fontWeight: FontWeight.bold),
+    return MaterialApp(
+      home: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const WriteADiary(),
               ),
-            ],
+            );
+          },
+          child: Icon(Icons.add),
+          backgroundColor: Colors.yellow,
+        ),
+        appBar: AppBar(
+          backgroundColor: Colors.lightBlueAccent.shade100,
+        ),
+        backgroundColor: Colors.lightBlueAccent.shade100,
+        body: SafeArea(
+          child: Center(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: _diariesStream,
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasError) {
+                  return const Text('Something went wrong');
+                }
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  FirebaseFirestore.instance
+                      .collection('diaries')
+                      .doc(user!.uid)
+                      .snapshots(includeMetadataChanges: true);
+
+                  return const Text("Loading...");
+                }
+                return ListView(
+                  children:
+                      snapshot.data!.docs.map((DocumentSnapshot document) {
+                    Map<String, dynamic> data = document.data()!;
+                    return ListTile(
+                      title: Text(data['diaryTime']),
+                      subtitle: Text(data['diaryTitle']),
+                    );
+                  }).toList(),
+                );
+              },
+            ),
           ),
         ),
       ),

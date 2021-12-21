@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '/src/calender.dart';
 import '/src/todoentries.dart';
 import '/src/diaryentries.dart';
-import '/src/aboutyou.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,7 +13,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
-    AboutYou(),
     DiaryEntries(),
     TodoEntries(),
     Calender()
@@ -26,10 +24,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  // AboutYou(),
-  // WriteADiaryRoute(),
-  // WriteATodo(),
-  // Calender()
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,11 +33,8 @@ class _HomePageState extends State<HomePage> {
         ),
         backgroundColor: Colors.lightBlueAccent.shade100,
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.lightBlueAccent.shade100,
           items: [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-                backgroundColor: Colors.lightBlueAccent.shade100),
             BottomNavigationBarItem(
                 icon: Icon(Icons.menu_book_rounded),
                 label: 'Diary Entries',

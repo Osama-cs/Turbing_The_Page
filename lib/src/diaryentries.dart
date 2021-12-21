@@ -40,6 +40,7 @@ class _DiaryEntriesState extends State<DiaryEntries> {
         ),
         appBar: AppBar(
           backgroundColor: Colors.lightBlueAccent.shade100,
+          title: const Text("Write A diary"),
         ),
         backgroundColor: Colors.lightBlueAccent.shade100,
         body: SafeArea(
@@ -59,9 +60,15 @@ class _DiaryEntriesState extends State<DiaryEntries> {
                   children:
                       snapshot.data!.docs.map((DocumentSnapshot document) {
                     Map<String, dynamic> data = document.data()!;
-                    return ListTile(
-                      title: Text(data['diaryTime']),
-                      subtitle: Text(data['diaryTitle']),
+                    return Card(
+                      elevation: 5,
+                      child: ListTile(
+                        leading: const Icon(Icons.note),
+                        title: Text(data['diaryTime']),
+                        subtitle: Text(data['diaryTitle']),
+                        isThreeLine: true,
+                        tileColor: Colors.lightBlueAccent.shade100,
+                      ),
                     );
                   }).toList(),
                 );

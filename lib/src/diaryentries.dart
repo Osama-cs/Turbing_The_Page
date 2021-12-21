@@ -50,11 +50,11 @@ class _DiaryEntriesState extends State<DiaryEntries> {
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasError) {
-                  return const Text('Something went wrong');
+                  return const Text("Something went wrong :(");
                 }
 
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Text("Loading...");
+                  return const CircularProgressIndicator();
                 }
                 return ListView(
                   children:
@@ -68,6 +68,20 @@ class _DiaryEntriesState extends State<DiaryEntries> {
                         subtitle: Text(data['diaryTitle']),
                         isThreeLine: true,
                         tileColor: Colors.lightBlueAccent.shade100,
+                        onTap: () => showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: Text(data['diaryTitle']),
+                            content: Text(data['diaryDescription']),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(context, 'Cancel'),
+                                child: const Text('Cancel'),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     );
                   }).toList(),

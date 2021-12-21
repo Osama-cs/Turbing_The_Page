@@ -16,12 +16,14 @@ class DiaryEntries extends StatefulWidget {
 }
 
 class _DiaryEntriesState extends State<DiaryEntries> {
-  final Stream<QuerySnapshot> _diariesStream =
-      FirebaseFirestore.instance.collection('diaries').snapshots();
   User? user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
+    final Stream<QuerySnapshot> _diariesStream = FirebaseFirestore.instance
+        .collection('diaries')
+        .where('uid', isEqualTo: user!.uid)
+        .snapshots(includeMetadataChanges: true);
     return MaterialApp(
       home: Scaffold(
         floatingActionButton: FloatingActionButton(
@@ -51,11 +53,6 @@ class _DiaryEntriesState extends State<DiaryEntries> {
                 }
 
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  FirebaseFirestore.instance
-                      .collection('diaries')
-                      .doc(user!.uid)
-                      .snapshots(includeMetadataChanges: true);
-
                   return const Text("Loading...");
                 }
                 return ListView(

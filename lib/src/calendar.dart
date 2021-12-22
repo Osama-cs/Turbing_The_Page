@@ -33,6 +33,7 @@ class _CalendarState extends State<Calendar> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightBlueAccent.shade100,
+        title: const Text("Calendar"),
       ),
       backgroundColor: Colors.lightBlueAccent.shade100,
       body: SafeArea(

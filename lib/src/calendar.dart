@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:individualproject/model/event.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -16,8 +18,7 @@ class _CalendarState extends State<Calendar> {
   CalendarFormat format = CalendarFormat.month;
   DateTime selectedDay = DateTime.now();
   DateTime focusedDay = DateTime.now();
-  moods? _mood = moods.meh;
-
+  TextEditingController _moodController = TextEditingController();
   @override
   void initState() {
     selectedEvents = {};
@@ -30,6 +31,11 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+    final Stream<QuerySnapshot> _moodStream = FirebaseFirestore.instance
+        .collection('moodCalendar')
+        .where('mood', isEqualTo: user!.uid)
+        .snapshots(includeMetadataChanges: true);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightBlueAccent.shade100,
@@ -68,10 +74,34 @@ class _CalendarState extends State<Calendar> {
                 ),
               ),
               ..._getEventsFromDay(selectedDay).map(
-                (Event event) => ListTile(
-                  title: Text(
-                    event.title,
-                  ),
+                (Event event) => StreamBuilder<QuerySnapshot>(
+                  stream: _moodStream,
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasError) {
+                      return Text('Something went wrong');
+                    }
+
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      (Event event) => ListTile(
+                            title: Text(
+                              event.title,
+                            ),
+                          );
+                      return Text("Loading");
+                    }
+
+                    return ListView(
+                      children:
+                          snapshot.data!.docs.map((DocumentSnapshot document) {
+                        Map<String, dynamic> data =
+                            document.data()! as Map<String, dynamic>;
+                        return ListTile(
+                          title: Text(data['mood']),
+                        );
+                      }).toList(),
+                    );
+                  },
                 ),
               ),
             ],
@@ -83,59 +113,12 @@ class _CalendarState extends State<Calendar> {
           context: context,
           builder: (context) => AlertDialog(
             title: const Text("mood for the day"),
+            content: TextFormField(
+              controller: _moodController,
+            ),
             actions: <Widget>[
-              RadioListTile<moods>(
-                title: const Text('Very Happy'),
-                value: moods.veryHappy,
-                groupValue: _mood,
-                onChanged: (moods? value) {
-                  setState(() {
-                    _mood = value;
-                  });
-                },
-              ),
-              RadioListTile<moods>(
-                title: const Text('Happy'),
-                value: moods.happy,
-                groupValue: _mood,
-                onChanged: (moods? value) {
-                  setState(() {
-                    _mood = value;
-                  });
-                },
-              ),
-              RadioListTile<moods>(
-                title: const Text('Meh'),
-                value: moods.meh,
-                groupValue: _mood,
-                onChanged: (moods? value) {
-                  setState(() {
-                    _mood = value;
-                  });
-                },
-              ),
-              RadioListTile<moods>(
-                title: const Text('Sad'),
-                value: moods.sad,
-                groupValue: _mood,
-                onChanged: (moods? value) {
-                  setState(() {
-                    _mood = value;
-                  });
-                },
-              ),
-              RadioListTile<moods>(
-                title: const Text('Very Sad'),
-                value: moods.verySad,
-                groupValue: _mood,
-                onChanged: (moods? value) {
-                  setState(() {
-                    _mood = value;
-                  });
-                },
-              ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   TextButton(
                     child: const Text("Cancel"),
@@ -143,20 +126,30 @@ class _CalendarState extends State<Calendar> {
                   ),
                   TextButton(
                     child: const Text("Ok"),
-                    onPressed: () {
-                      if (selectedEvents[selectedDay] != null) {
-                        selectedEvents[selectedDay]!.add(
-                          Event(
-                            title: _mood.toString(),
-                          ),
-                        );
+                    onPressed: () async {
+                      final String mood = _moodController.text.trim();
+                      if (_moodController.text.isEmpty) {
                       } else {
-                        selectedEvents[selectedDay] = [
-                          Event(
-                            title: _mood.toString(),
-                          ),
-                        ];
+                        if (selectedEvents[selectedDay] != null) {
+                          selectedEvents[selectedDay]!.add(
+                            Event(title: _moodController.text),
+                          );
+                        } else {
+                          selectedEvents[selectedDay] = [
+                            Event(title: _moodController.text)
+                          ];
+                        }
                       }
+
+                      User? user = FirebaseAuth.instance.currentUser;
+
+                      await FirebaseFirestore.instance
+                          .collection("moodCalendar")
+                          .add({
+                        'uid': user!.uid,
+                        'mood': mood,
+                      });
+
                       Navigator.pop(context);
                       setState(() {});
                       return;

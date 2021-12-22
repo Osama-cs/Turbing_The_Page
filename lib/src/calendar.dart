@@ -74,34 +74,10 @@ class _CalendarState extends State<Calendar> {
                 ),
               ),
               ..._getEventsFromDay(selectedDay).map(
-                (Event event) => StreamBuilder<QuerySnapshot>(
-                  stream: _moodStream,
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.hasError) {
-                      return Text('Something went wrong');
-                    }
-
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      (Event event) => ListTile(
-                            title: Text(
-                              event.title,
-                            ),
-                          );
-                      return Text("Loading");
-                    }
-
-                    return ListView(
-                      children:
-                          snapshot.data!.docs.map((DocumentSnapshot document) {
-                        Map<String, dynamic> data =
-                            document.data()! as Map<String, dynamic>;
-                        return ListTile(
-                          title: Text(data['mood']),
-                        );
-                      }).toList(),
-                    );
-                  },
+                (Event event) => ListTile(
+                  title: Text(
+                    event.title,
+                  ),
                 ),
               ),
             ],

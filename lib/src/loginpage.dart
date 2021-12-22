@@ -1,4 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:individualproject/db/firebaseservices.dart';
+import 'package:individualproject/src/signuppage.dart';
 import '/src/homepage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -9,7 +14,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool isHidden = false;
+  User? firebaseUser = FirebaseAuth.instance.currentUser;
+
+  final auth = FirebaseAuth.instance;
+
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -49,6 +59,8 @@ class _LoginPageState extends State<LoginPage> {
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: TextFormField(
+                            controller: _email,
+                            keyboardType: TextInputType.emailAddress,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your Email';
@@ -72,12 +84,13 @@ class _LoginPageState extends State<LoginPage> {
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: TextFormField(
+                            controller: _password,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your Password';
                               }
                             },
-                            obscureText: isHidden,
+                            obscureText: true,
                             decoration: const InputDecoration(
                               hintText: 'Password',
                               hintStyle: TextStyle(
@@ -89,20 +102,45 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            // ScaffoldMessenger.of(context).showSnackBar(
-                            //     const SnackBar(content: Text('Logging In')),
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const HomePage()),
-                            );
-                          }
-                        },
-                        child: const Text('Log in'),
-                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          ElevatedButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                User? user = FirebaseAuth.instance.currentUser;
+                                final String email = _email.text.trim();
+                                final String password = _password.text.trim();
+
+                                context.read<FirebaseService>().logIn(
+                                      email,
+                                      password,
+                                    );
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const HomePage()),
+                                );
+                              }
+                            },
+                            child: const Text('Log in'),
+                          ),
+                          const SizedBox(
+                            width: 50,
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SignupPage()),
+                              );
+                            },
+                            child: const Text('Sign up'),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),

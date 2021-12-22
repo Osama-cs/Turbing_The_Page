@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_field/date_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:individualproject/db/database_provider.dart';
 import 'package:individualproject/src/homepage.dart';
 
 class WriteADiary extends StatefulWidget {
@@ -11,6 +14,12 @@ class WriteADiary extends StatefulWidget {
 
 class _WriteADiaryState extends State<WriteADiary> {
   final _formKey2 = GlobalKey<FormState>();
+
+  bool _isProcessing = false;
+
+  final TextEditingController _timeController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,29 +44,36 @@ class _WriteADiaryState extends State<WriteADiary> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: DateTimeFormField(
-                          decoration: const InputDecoration(
-                            hintText: 'date',
-                            suffixIcon: Icon(Icons.event_note),
-                            hintStyle: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey,
+                          padding: const EdgeInsets.all(10.0),
+                          child: TextFormField(
+                            controller: _timeController,
+                            decoration: const InputDecoration(
+                              labelText: "what is the date you want to enter",
+                              hintText: "date",
+                              // suffixIcon: Icon(Icons.event_note),
+                              labelStyle: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.grey,
+                              ),
                             ),
-                          ),
-                          mode: DateTimeFieldPickerMode.date,
-                          autovalidateMode: AutovalidateMode.always,
-                          validator: (value) {
-                            if (value == null) {
-                              return 'Please enter a date';
-                            }
-                          },
-                        ),
-                      ),
+                            onTap: () async {
+                              DateTime date = DateTime(1900);
+                              FocusScope.of(context).requestFocus(FocusNode());
+
+                              date = (await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(1900),
+                                  lastDate: DateTime(2100)))!;
+
+                              _timeController.text = date.toIso8601String();
+                            },
+                          )),
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: TextFormField(
+                          controller: _titleController,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your title';
@@ -76,6 +92,7 @@ class _WriteADiaryState extends State<WriteADiary> {
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: TextFormField(
+                          controller: _descriptionController,
                           keyboardType: TextInputType.multiline,
                           minLines: 1,
                           maxLines: 3,
@@ -94,20 +111,41 @@ class _WriteADiaryState extends State<WriteADiary> {
                           ),
                         ),
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (_formKey2.currentState!.validate()) {
-                            // ScaffoldMessenger.of(context).showSnackBar(
-                            //     const SnackBar(content: Text('Logging In')),
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const HomePage()),
-                            );
-                          }
-                        },
-                        child: const Text('Submit'),
-                      ),
+                      _isProcessing
+                          ? const Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.white,
+                                ),
+                              ),
+                            )
+                          : ElevatedButton(
+                              onPressed: () async {
+                                if (_formKey2.currentState!.validate()) {
+                                  final String diaryTime =
+                                      _timeController.text.trim();
+                                  final String diaryTitle =
+                                      _titleController.text.trim();
+                                  final String diaryDescription =
+                                      _descriptionController.text.trim();
+                                  User? user =
+                                      FirebaseAuth.instance.currentUser;
+
+                                  await FirebaseFirestore.instance
+                                      .collection("diaries")
+                                      .add({
+                                    'uid': user!.uid,
+                                    'diaryTime': diaryTime,
+                                    'diaryTitle': diaryTitle,
+                                    'diaryDescription': diaryDescription,
+                                  });
+
+                                  Navigator.of(context).pop();
+                                }
+                              },
+                              child: const Text('Submit'),
+                            ),
                     ],
                   ),
                 ),
@@ -119,3 +157,11 @@ class _WriteADiaryState extends State<WriteADiary> {
     );
   }
 }
+
+// hintText: 'date',
+// suffixIcon: Icon(Icons.event_note),
+// hintStyle: TextStyle(
+//   fontSize: 16,
+//   fontWeight: FontWeight.w600,
+//   color: Colors.grey,
+// ),

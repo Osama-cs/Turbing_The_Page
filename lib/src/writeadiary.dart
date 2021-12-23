@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:date_field/date_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:individualproject/db/database_provider.dart';
-import 'package:individualproject/src/homepage.dart';
 
 class WriteADiary extends StatefulWidget {
   const WriteADiary({Key? key}) : super(key: key);

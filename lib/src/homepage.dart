@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '/src/calender.dart';
+import '/src/calendar.dart';
 import '/src/todoentries.dart';
 import '/src/diaryentries.dart';
 
@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
   static const List<Widget> _widgetOptions = <Widget>[
     DiaryEntries(),
     TodoEntries(),
-    Calender()
+    Calendar()
   ];
 
   void _onItemTapped(int index) {
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                 backgroundColor: Colors.lightBlueAccent.shade100),
             BottomNavigationBarItem(
                 icon: Icon(Icons.calendar_today_rounded),
-                label: 'To-do List',
+                label: 'Calender',
                 backgroundColor: Colors.lightBlueAccent.shade100),
           ],
           currentIndex: _selectedIndex,

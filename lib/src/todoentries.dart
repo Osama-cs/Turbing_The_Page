@@ -25,6 +25,7 @@ class TodoEntries extends StatelessWidget {
       ),
       appBar: AppBar(
         backgroundColor: Colors.lightBlueAccent.shade100,
+        title: const Text("Todo List"),
       ),
       backgroundColor: Colors.lightBlueAccent.shade100,
       body: SafeArea(

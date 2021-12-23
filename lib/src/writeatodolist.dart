@@ -1,7 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_field/date_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import 'homepage.dart';
 
 class WriteATodoList extends StatefulWidget {
   const WriteATodoList({Key? key}) : super(key: key);
@@ -56,7 +56,8 @@ class _WriteATodoListState extends State<WriteATodoList> {
                             ),
                           ),
                           onTap: () async {
-                            TimeOfDay time = TimeOfDay.now();
+                            TimeOfDay time =
+                                const TimeOfDay(hour: 12, minute: 50);
 
                             time = (await showTimePicker(
                                 context: context,
@@ -86,11 +87,13 @@ class _WriteATodoListState extends State<WriteATodoList> {
                             ),
                           ),
                           onTap: () async {
-                            TimeOfDay time = TimeOfDay.now();
+                            TimeOfDay time =
+                                const TimeOfDay(hour: 12, minute: 50);
 
                             time = (await showTimePicker(
-                                context: context,
-                                initialTime: TimeOfDay.now()))!;
+                              context: context,
+                              initialTime: TimeOfDay.now(),
+                            ))!;
                             _endOfActivityController.text = time.toString();
                           },
                           autovalidateMode: AutovalidateMode.always,
@@ -124,10 +127,27 @@ class _WriteATodoListState extends State<WriteATodoList> {
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey3.currentState!.validate()) {
-                            // ScaffoldMessenger.of(context).showSnackBar(
-                            //     const SnackBar(content: Text('Logging In')),
+                            final String todoStartOfActivity =
+                                _startOfActivityController.text.trim();
+                            final String todoEndOfActivity =
+                                _endOfActivityController.text.trim();
+                            final String todoDescription =
+                                _descriptionController.text.trim();
+                            final DateTime date = DateTime.now();
+                            User? user = FirebaseAuth.instance.currentUser;
+
+                            await FirebaseFirestore.instance
+                                .collection("todoLists")
+                                .add({
+                              'uid': user!.uid,
+                              'todoStart': todoStartOfActivity,
+                              'todoEnd': todoEndOfActivity,
+                              'todoDescription': todoDescription,
+                              'date': date,
+                            });
+
                             Navigator.of(context).pop();
                           }
                         },

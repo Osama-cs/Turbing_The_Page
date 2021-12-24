@@ -127,7 +127,8 @@ class _WriteADiaryState extends State<WriteADiary> {
                                       _titleController.text.trim();
                                   final String diaryDescription =
                                       _descriptionController.text.trim();
-                                  final DateTime date = DateTime.now();
+                                  final String date = formatDate(
+                                      DateTime.now(), [yyyy, '-', mm, '-', dd]);
                                   User? user =
                                       FirebaseAuth.instance.currentUser;
 

@@ -57,12 +57,16 @@ class _TodoEntriesState extends State<TodoEntries> {
                     Map<String, dynamic> data = document.data()!;
                     return Column(
                       children: [
+                        Text(data['date']),
                         Text(data['todoStart']),
                         Card(
                           elevation: 5,
                           child: ListTile(
                             leading: const Icon(Icons.list),
-                            title: Text(data['todoDescription']),
+                            title: Text(
+                              data['todoDescription'],
+                              style: TextStyle(),
+                            ),
                             onTap: () => showDialog<String>(
                               context: context,
                               builder: (BuildContext context) => AlertDialog(
@@ -72,6 +76,19 @@ class _TodoEntriesState extends State<TodoEntries> {
                                     onPressed: () =>
                                         Navigator.pop(context, 'Cancel'),
                                     child: const Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async {
+                                      await FirebaseFirestore.instance
+                                          .collection("todoLists")
+                                          .doc(snapshot.data.toString())
+                                          .delete();
+                                      Navigator.pop(context, 'delete');
+                                    },
+                                    child: const Text(
+                                      'Delete',
+                                      style: TextStyle(color: Colors.red),
+                                    ),
                                   ),
                                 ],
                               ),

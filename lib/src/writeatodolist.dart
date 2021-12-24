@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_field/date_field.dart';
+import 'package:date_format/date_format.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -62,7 +63,8 @@ class _WriteATodoListState extends State<WriteATodoList> {
                             time = (await showTimePicker(
                                 context: context,
                                 initialTime: TimeOfDay.now()))!;
-                            _startOfActivityController.text = time.toString();
+                            _startOfActivityController.text =
+                                time.format(context).toString();
                           },
                           autovalidateMode: AutovalidateMode.always,
                           validator: (value) {
@@ -94,7 +96,8 @@ class _WriteATodoListState extends State<WriteATodoList> {
                               context: context,
                               initialTime: TimeOfDay.now(),
                             ))!;
-                            _endOfActivityController.text = time.toString();
+                            _endOfActivityController.text =
+                                time.format(context).toString();
                           },
                           autovalidateMode: AutovalidateMode.always,
                           validator: (value) {
@@ -135,7 +138,9 @@ class _WriteATodoListState extends State<WriteATodoList> {
                                 _endOfActivityController.text.trim();
                             final String todoDescription =
                                 _descriptionController.text.trim();
-                            final DateTime date = DateTime.now();
+                            final String date = formatDate(
+                                DateTime.now(), [yyyy, '-', mm, '-', dd]);
+
                             User? user = FirebaseAuth.instance.currentUser;
 
                             await FirebaseFirestore.instance

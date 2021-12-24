@@ -65,7 +65,8 @@ class _WriteADiaryState extends State<WriteADiary> {
                                   firstDate: DateTime(1900),
                                   lastDate: DateTime(2100)))!;
 
-                              _timeController.text = date.toString();
+                              _timeController.text =
+                                  formatDate(date, [yyyy, '-', mm, '-', dd]);
                             },
                           )),
                       Padding(

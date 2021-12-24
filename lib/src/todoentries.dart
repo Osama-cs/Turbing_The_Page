@@ -18,6 +18,7 @@ class _TodoEntriesState extends State<TodoEntries> {
     final Stream<QuerySnapshot> _todoStream = FirebaseFirestore.instance
         .collection('todoLists')
         .where('uid', isEqualTo: user!.uid)
+        .orderBy('todoStart', descending: true)
         .snapshots(includeMetadataChanges: true);
     return MaterialApp(
       home: Scaffold(
@@ -57,15 +58,23 @@ class _TodoEntriesState extends State<TodoEntries> {
                     Map<String, dynamic> data = document.data()!;
                     return Column(
                       children: [
-                        Text(data['date']),
-                        Text(data['todoStart']),
+                        Text(
+                          data['date'],
+                          style: TextStyle(
+                              fontSize: 28, fontWeight: FontWeight.w600),
+                        ),
+                        Text(
+                          data['todoStart'],
+                          style: TextStyle(fontSize: 25),
+                        ),
                         Card(
                           elevation: 5,
                           child: ListTile(
                             leading: const Icon(Icons.list),
+                            tileColor: Colors.lightBlueAccent.shade100,
                             title: Text(
                               data['todoDescription'],
-                              style: TextStyle(),
+                              style: TextStyle(fontSize: 20),
                             ),
                             onTap: () => showDialog<String>(
                               context: context,
@@ -95,7 +104,10 @@ class _TodoEntriesState extends State<TodoEntries> {
                             ),
                           ),
                         ),
-                        Text(data['todoEnd']),
+                        Text(
+                          data['todoEnd'],
+                          style: TextStyle(fontSize: 25),
+                        ),
                         SizedBox(height: 20),
                       ],
                     );

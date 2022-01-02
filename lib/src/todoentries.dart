@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:individualproject/src/settingspage.dart';
 import 'package:individualproject/src/writeatodolist.dart';
 
 class TodoEntries extends StatefulWidget {
@@ -31,7 +32,10 @@ class _TodoEntriesState extends State<TodoEntries> {
               ),
             );
           },
-          child: Icon(Icons.add),
+          child: Icon(
+            Icons.add,
+            color: Colors.black,
+          ),
           backgroundColor: Colors.yellow,
         ),
         appBar: AppBar(
@@ -52,20 +56,32 @@ class _TodoEntriesState extends State<TodoEntries> {
                   color: Colors.lightBlueAccent.shade100,
                 ),
                 child: const Text(
-                  "Turing the Page",
+                  "Turning The Page",
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 24,
                   ),
                 ),
               ),
-              const ListTile(
-                leading: Icon(Icons.account_circle_rounded),
-                title: Text('About Us'),
+              ListTile(
+                leading: const Icon(Icons.account_circle_rounded),
+                title: const Text('More useful information'),
+                onTap: () {},
               ),
-              const ListTile(
-                leading: Icon(Icons.settings),
-                title: Text('Settings'),
+              ListTile(
+                leading: const Icon(Icons.map),
+                title: const Text('Counselors/doctors near you'),
+                onTap: () {},
+              ),
+              ListTile(
+                leading: const Icon(Icons.settings),
+                title: const Text('Settings'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SettingsPage()),
+                  );
+                },
               ),
             ],
           ),

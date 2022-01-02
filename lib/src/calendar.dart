@@ -37,6 +37,7 @@ class _CalendarState extends State<Calendar> {
         .where('mood', isEqualTo: user!.uid)
         .snapshots(includeMetadataChanges: true);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.lightBlueAccent.shade100,
         title: const Text("Calendar"),
@@ -88,7 +89,7 @@ class _CalendarState extends State<Calendar> {
         onPressed: () => showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text("mood for the day"),
+            // title: const Text("mood for the day"),
             content: TextFormField(
               controller: _moodController,
             ),
@@ -136,8 +137,15 @@ class _CalendarState extends State<Calendar> {
             ],
           ),
         ),
-        label: const Text("how was your mood for the day?"),
-        icon: const Icon(Icons.app_registration),
+        label: const Text(
+          "how was your mood for the day?",
+          style: TextStyle(color: Colors.black),
+        ),
+        icon: const Icon(
+          Icons.app_registration,
+          color: Colors.black,
+        ),
+        backgroundColor: Colors.yellow,
       ),
     );
   }

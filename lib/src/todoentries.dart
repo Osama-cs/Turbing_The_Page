@@ -36,7 +36,39 @@ class _TodoEntriesState extends State<TodoEntries> {
         ),
         appBar: AppBar(
           backgroundColor: Colors.lightBlueAccent.shade100,
-          title: const Text("Write A todo list"),
+          title: const Text(
+            "Write A todo list",
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.lightBlueAccent.shade100,
+                ),
+                child: const Text(
+                  "Turing the Page",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 24,
+                  ),
+                ),
+              ),
+              const ListTile(
+                leading: Icon(Icons.account_circle_rounded),
+                title: Text('About Us'),
+              ),
+              const ListTile(
+                leading: Icon(Icons.settings),
+                title: Text('Settings'),
+              ),
+            ],
+          ),
         ),
         backgroundColor: Colors.lightBlueAccent.shade100,
         body: SafeArea(

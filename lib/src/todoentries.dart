@@ -64,11 +64,6 @@ class _TodoEntriesState extends State<TodoEntries> {
                 ),
               ),
               ListTile(
-                leading: const Icon(Icons.account_circle_rounded),
-                title: const Text('More useful information'),
-                onTap: () {},
-              ),
-              ListTile(
                 leading: const Icon(Icons.map),
                 title: const Text('Counselors/doctors near you'),
                 onTap: () {},

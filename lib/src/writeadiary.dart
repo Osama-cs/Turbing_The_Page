@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:date_format/date_format.dart';
 
 class WriteADiary extends StatefulWidget {
   const WriteADiary({Key? key}) : super(key: key);
@@ -64,7 +65,8 @@ class _WriteADiaryState extends State<WriteADiary> {
                                   firstDate: DateTime(1900),
                                   lastDate: DateTime(2100)))!;
 
-                              _timeController.text = date.toIso8601String();
+                              _timeController.text =
+                                  formatDate(date, [yyyy, '-', mm, '-', dd]);
                             },
                           )),
                       Padding(
@@ -126,6 +128,8 @@ class _WriteADiaryState extends State<WriteADiary> {
                                       _titleController.text.trim();
                                   final String diaryDescription =
                                       _descriptionController.text.trim();
+                                  final String date = formatDate(
+                                      DateTime.now(), [yyyy, '-', mm, '-', dd]);
                                   User? user =
                                       FirebaseAuth.instance.currentUser;
 
@@ -136,6 +140,7 @@ class _WriteADiaryState extends State<WriteADiary> {
                                     'diaryTime': diaryTime,
                                     'diaryTitle': diaryTitle,
                                     'diaryDescription': diaryDescription,
+                                    'date': date,
                                   });
 
                                   Navigator.of(context).pop();

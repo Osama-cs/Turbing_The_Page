@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:individualproject/src/helplinespage.dart';
 import 'package:individualproject/src/settingspage.dart';
 import 'package:individualproject/src/writeatodolist.dart';
 
@@ -67,6 +68,16 @@ class _TodoEntriesState extends State<TodoEntries> {
                 leading: const Icon(Icons.map),
                 title: const Text('Counselors/doctors near you'),
                 onTap: () {},
+              ),
+              ListTile(
+                leading: const Icon(Icons.help_outline_rounded),
+                title: const Text('Mental Health Helplines'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => HelplinesPage()),
+                  );
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.settings),

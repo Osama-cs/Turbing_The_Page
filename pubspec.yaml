@@ -20,6 +20,7 @@ dependencies:
   intl: ^0.17.0
   date_format: ^2.0.4
   url_launcher: ^6.0.17
+  bulleted_list: ^0.0.1+0.1a
   flutter:
     sdk: flutter
 

@@ -34,6 +34,7 @@ class _SettingsPageState extends State<SettingsPage> {
         body: SafeArea(
           child: Center(
             child: ElevatedButton(
+              style: ElevatedButton.styleFrom(primary: Colors.red),
               onPressed: () async {
                 if (firebaseUser != null) {
                   await FirebaseAuth.instance.signOut();

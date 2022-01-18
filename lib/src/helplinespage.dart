@@ -10,6 +10,7 @@ class HelplinesPage extends StatefulWidget {
 }
 
 class _HelplinesPageState extends State<HelplinesPage> {
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
@@ -30,9 +31,9 @@ class _HelplinesPageState extends State<HelplinesPage> {
         body: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: const [
               Text(
-                "Here are some mental health helplines that you can call if you ever feel down about yourself and need some extra help. (UK numebrs only).",
+                "Here are some mental health helplines that you can call if you ever feel down about yourself and need some extra help. (UK numbers only).",
                 style: TextStyle(fontSize: 18),
               ),
               SizedBox(

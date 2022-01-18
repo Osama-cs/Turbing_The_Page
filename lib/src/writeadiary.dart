@@ -13,7 +13,7 @@ class WriteADiary extends StatefulWidget {
 class _WriteADiaryState extends State<WriteADiary> {
   final _formKey2 = GlobalKey<FormState>();
 
-  bool _isProcessing = false;
+  final bool _isProcessing = false;
 
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _titleController = TextEditingController();

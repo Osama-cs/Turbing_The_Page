@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:individualproject/src/settingspage.dart';
 
+import 'gpnearme.dart';
+import 'helplinespage.dart';
 import 'writeadiary.dart';
 
 void main() {
@@ -35,12 +38,72 @@ class _DiaryEntriesState extends State<DiaryEntries> {
               ),
             );
           },
-          child: Icon(Icons.add),
+          child: const Icon(
+            Icons.add,
+            color: Colors.black,
+          ),
           backgroundColor: Colors.yellow,
         ),
         appBar: AppBar(
           backgroundColor: Colors.lightBlueAccent.shade100,
-          title: const Text("Write A diary"),
+          title: const Text(
+            "Write A diary",
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.lightBlueAccent.shade100,
+                ),
+                child: const Text(
+                  "Turning The Page",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 24,
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.map),
+                title: const Text('Counselors/doctors near you'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const GPNearMePage()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.help_outline_rounded),
+                title: const Text('Mental Health Helplines'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const HelplinesPage()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.settings),
+                title: const Text('Settings'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SettingsPage()),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
         backgroundColor: Colors.lightBlueAccent.shade100,
         body: SafeArea(

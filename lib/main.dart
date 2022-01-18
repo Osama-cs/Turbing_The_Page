@@ -9,7 +9,7 @@ import 'src/loginpage.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -32,19 +32,21 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             fontFamily: 'Inter',
           ),
-          home: LoginPage(),
+          home: const LoginPage(),
         ));
   }
 }
 
 class AuthWrapper extends StatelessWidget {
+  const AuthWrapper({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final user = context.watch<User>();
 
     if (user != null) {
-      return HomePage();
+      return const HomePage();
     }
-    return LoginPage();
+    return const LoginPage();
   }
 }

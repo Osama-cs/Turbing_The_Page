@@ -2,7 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:individualproject/model/event.dart';
+import 'package:individualproject/src/settingspage.dart';
 import 'package:table_calendar/table_calendar.dart';
+
+import 'gpnearme.dart';
+import 'helplinespage.dart';
 
 class Calendar extends StatefulWidget {
   const Calendar({Key? key}) : super(key: key);
@@ -40,7 +44,62 @@ class _CalendarState extends State<Calendar> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.lightBlueAccent.shade100,
-        title: const Text("Calendar"),
+        title: const Text(
+          "Calendar",
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.lightBlueAccent.shade100,
+              ),
+              child: const Text(
+                "Turning The Page",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.map),
+              title: const Text('Counselors/doctors near you'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const GPNearMePage()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.help_outline_rounded),
+              title: const Text('Mental Health Helplines'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const HelplinesPage()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text('Settings'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SettingsPage()),
+                );
+              },
+            ),
+          ],
+        ),
       ),
       backgroundColor: Colors.lightBlueAccent.shade100,
       body: SafeArea(

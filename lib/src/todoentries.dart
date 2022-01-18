@@ -34,7 +34,7 @@ class _TodoEntriesState extends State<TodoEntries> {
               ),
             );
           },
-          child: Icon(
+          child: const Icon(
             Icons.add,
             color: Colors.black,
           ),
@@ -71,7 +71,8 @@ class _TodoEntriesState extends State<TodoEntries> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => GPNearMePage()),
+                    MaterialPageRoute(
+                        builder: (context) => const GPNearMePage()),
                   );
                 },
               ),
@@ -81,7 +82,8 @@ class _TodoEntriesState extends State<TodoEntries> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => HelplinesPage()),
+                    MaterialPageRoute(
+                        builder: (context) => const HelplinesPage()),
                   );
                 },
               ),
@@ -91,7 +93,8 @@ class _TodoEntriesState extends State<TodoEntries> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SettingsPage()),
+                    MaterialPageRoute(
+                        builder: (context) => const SettingsPage()),
                   );
                 },
               ),
@@ -120,12 +123,12 @@ class _TodoEntriesState extends State<TodoEntries> {
                       children: [
                         Text(
                           data['date'],
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 28, fontWeight: FontWeight.w600),
                         ),
                         Text(
                           data['todoStart'],
-                          style: TextStyle(fontSize: 25),
+                          style: const TextStyle(fontSize: 25),
                         ),
                         Card(
                           elevation: 5,
@@ -134,7 +137,7 @@ class _TodoEntriesState extends State<TodoEntries> {
                             tileColor: Colors.lightBlueAccent.shade100,
                             title: Text(
                               data['todoDescription'],
-                              style: TextStyle(fontSize: 20),
+                              style: const TextStyle(fontSize: 20),
                             ),
                             onTap: () => showDialog<String>(
                               context: context,
@@ -166,9 +169,9 @@ class _TodoEntriesState extends State<TodoEntries> {
                         ),
                         Text(
                           data['todoEnd'],
-                          style: TextStyle(fontSize: 25),
+                          style: const TextStyle(fontSize: 25),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                       ],
                     );
                   }).toList(),

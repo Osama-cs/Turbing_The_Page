@@ -14,6 +14,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   User? firebaseUser = FirebaseAuth.instance.currentUser;
 
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
@@ -26,7 +27,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
@@ -44,7 +45,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   );
                 }
               },
-              child: Text("Sign out"),
+              child: const Text("Sign out"),
             ),
           ),
         ),

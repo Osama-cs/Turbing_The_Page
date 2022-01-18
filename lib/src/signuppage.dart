@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:individualproject/db/firebaseservices.dart';
 import 'package:individualproject/src/loginpage.dart';
@@ -132,7 +131,7 @@ class _SignupPageState extends State<SignupPage> {
                             },
                             obscureText: true,
                             decoration: const InputDecoration(
-                              hintText: 'Password',
+                              hintText: 'Confirm Passwords',
                               hintStyle: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,

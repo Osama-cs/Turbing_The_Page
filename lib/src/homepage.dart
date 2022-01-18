@@ -36,15 +36,15 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.lightBlueAccent.shade100,
           items: [
             BottomNavigationBarItem(
-                icon: Icon(Icons.menu_book_rounded),
+                icon: const Icon(Icons.menu_book_rounded),
                 label: 'Diary Entries',
                 backgroundColor: Colors.lightBlueAccent.shade100),
             BottomNavigationBarItem(
-                icon: Icon(Icons.list_alt_rounded),
+                icon: const Icon(Icons.list_alt_rounded),
                 label: 'To-do List',
                 backgroundColor: Colors.lightBlueAccent.shade100),
             BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_today_rounded),
+                icon: const Icon(Icons.calendar_today_rounded),
                 label: 'Calender',
                 backgroundColor: Colors.lightBlueAccent.shade100),
           ],

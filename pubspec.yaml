@@ -21,6 +21,8 @@ dependencies:
   date_format: ^2.0.4
   url_launcher: ^6.0.17
   bulleted_list: ^0.0.1+0.1a
+  google_maps_flutter: ^2.1.1
+  location: ^4.3.0
   flutter:
     sdk: flutter
 

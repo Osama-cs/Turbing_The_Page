@@ -23,6 +23,7 @@ dependencies:
   bulleted_list: ^0.0.1+0.1a
   google_maps_flutter: ^2.1.1
   location: ^4.3.0
+  test: ^1.0.0
   flutter:
     sdk: flutter
 
@@ -31,6 +32,8 @@ dependencies:
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
+  integration_test:
+    sdk: flutter
   flutter_test:
     sdk: flutter
 

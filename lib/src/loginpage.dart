@@ -60,11 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: TextFormField(
                             controller: _email,
                             keyboardType: TextInputType.emailAddress,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your Email';
-                              }
-                            },
+                            validator: EmailFieldValidator.validate,
                             decoration: const InputDecoration(
                               hintText: 'Email',
                               hintStyle: TextStyle(
@@ -84,11 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                           padding: const EdgeInsets.all(10.0),
                           child: TextFormField(
                             controller: _password,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your Password';
-                              }
-                            },
+                            validator: PasswordFieldValidator.validate,
                             obscureText: true,
                             decoration: const InputDecoration(
                               hintText: 'Password',
@@ -149,5 +141,17 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+}
+
+class PasswordFieldValidator {
+  static String? validate(String? value) {
+    return value!.isEmpty ? 'Please enter your Password' : null;
+  }
+}
+
+class EmailFieldValidator {
+  static String? validate(String? value) {
+    return value!.isEmpty ? 'Please enter your Email' : null;
   }
 }

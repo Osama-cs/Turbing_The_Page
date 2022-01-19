@@ -50,11 +50,7 @@ class _SignupPageState extends State<SignupPage> {
                           child: TextFormField(
                             controller: _fullname,
                             keyboardType: TextInputType.name,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your Full name';
-                              }
-                            },
+                            validator: NameFieldValidator.validate,
                             decoration: const InputDecoration(
                               hintText: 'Full Name',
                               hintStyle: TextStyle(
@@ -75,11 +71,7 @@ class _SignupPageState extends State<SignupPage> {
                           child: TextFormField(
                             controller: _email,
                             keyboardType: TextInputType.emailAddress,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your Email';
-                              }
-                            },
+                            validator: EmailFieldValidator.validate,
                             decoration: const InputDecoration(
                               hintText: 'Email',
                               hintStyle: TextStyle(
@@ -99,11 +91,7 @@ class _SignupPageState extends State<SignupPage> {
                           padding: const EdgeInsets.all(10.0),
                           child: TextFormField(
                             controller: _password,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your Password';
-                              }
-                            },
+                            validator: PasswordFieldValidator.validate,
                             obscureText: true,
                             decoration: const InputDecoration(
                               hintText: 'Password',
@@ -124,11 +112,7 @@ class _SignupPageState extends State<SignupPage> {
                           padding: const EdgeInsets.all(10.0),
                           child: TextFormField(
                             controller: _confirmpassword,
-                            validator: (value) {
-                              if (value == _password) {
-                                return 'Please match the passwords.';
-                              }
-                            },
+                            validator: ConfirmPasswordFieldValidator.validate,
                             obscureText: true,
                             decoration: const InputDecoration(
                               hintText: 'Confirm Passwords',
@@ -183,5 +167,29 @@ class _SignupPageState extends State<SignupPage> {
         ),
       ),
     );
+  }
+}
+
+class NameFieldValidator {
+  static String? validate(String? value) {
+    return value!.isEmpty ? 'Please enter your Full Name' : null;
+  }
+}
+
+class EmailFieldValidator {
+  static String? validate(String? value) {
+    return value!.isEmpty ? 'Please enter your Email' : null;
+  }
+}
+
+class PasswordFieldValidator {
+  static String? validate(String? value) {
+    return value!.isEmpty ? 'Please enter your Password' : null;
+  }
+}
+
+class ConfirmPasswordFieldValidator {
+  static String? validate(String? value) {
+    return value!.isEmpty ? "Please confirm the password" : null;
   }
 }

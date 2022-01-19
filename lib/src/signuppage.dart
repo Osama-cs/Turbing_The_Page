@@ -12,6 +12,7 @@ class SignupPage extends StatefulWidget {
   _SignupPageState createState() => _SignupPageState();
 }
 
+//This page here allows for the user to make an account if they don't have one.
 class _SignupPageState extends State<SignupPage> {
   final TextEditingController _fullname = TextEditingController();
   final TextEditingController _email = TextEditingController();
@@ -133,6 +134,7 @@ class _SignupPageState extends State<SignupPage> {
                             final String password = _password.text.trim();
                             User? user = FirebaseAuth.instance.currentUser;
 
+                            //this is where the data from the text controllers, gets uploaded to firebase firestore.
                             context
                                 .read<FirebaseService>()
                                 .signUp(

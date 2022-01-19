@@ -13,6 +13,7 @@ class TodoEntries extends StatefulWidget {
   _TodoEntriesState createState() => _TodoEntriesState();
 }
 
+//This page shows the to-do lists that the user has submitted.
 class _TodoEntriesState extends State<TodoEntries> {
   User? user = FirebaseAuth.instance.currentUser;
 
@@ -104,6 +105,7 @@ class _TodoEntriesState extends State<TodoEntries> {
         backgroundColor: Colors.lightBlueAccent.shade100,
         body: SafeArea(
           child: Center(
+            //This Stream builder is how the data gets displayed onto the page from firebase firestore.
             child: StreamBuilder<QuerySnapshot>(
               stream: _todoStream,
               builder: (BuildContext context,

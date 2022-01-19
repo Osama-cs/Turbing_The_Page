@@ -12,7 +12,11 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
+//This page here allows for the user to login too the application if they have
+//an account and access the application.
+
 class _LoginPageState extends State<LoginPage> {
+  //This sets up the connection to firebase, so we can save the data to firebase.
   User? firebaseUser = FirebaseAuth.instance.currentUser;
 
   final auth = FirebaseAuth.instance;
@@ -103,6 +107,8 @@ class _LoginPageState extends State<LoginPage> {
                                 final String email = _email.text.trim();
                                 final String password = _password.text.trim();
 
+                                //Here is where the data gets retrieved from firebase firestore
+                                //so we can log in the users.
                                 context.read<FirebaseService>().logIn(
                                       email,
                                       password,
@@ -144,12 +150,14 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
+//This class is her to validate the text in the text field.
 class PasswordFieldValidator {
   static String? validate(String? value) {
     return value!.isEmpty ? 'Please enter your Password' : null;
   }
 }
 
+//This class is her to validate the text in the text field.
 class EmailFieldValidator {
   static String? validate(String? value) {
     return value!.isEmpty ? 'Please enter your Email' : null;

@@ -18,6 +18,7 @@ class DiaryEntries extends StatefulWidget {
   _DiaryEntriesState createState() => _DiaryEntriesState();
 }
 
+//This is where the diary entries from firebase gets displayed.
 class _DiaryEntriesState extends State<DiaryEntries> {
   User? user = FirebaseAuth.instance.currentUser;
 
@@ -108,6 +109,7 @@ class _DiaryEntriesState extends State<DiaryEntries> {
         backgroundColor: Colors.lightBlueAccent.shade100,
         body: SafeArea(
           child: Center(
+            //This Stream builder is how the data gets displayed onto the page from firebase firestore.
             child: StreamBuilder<QuerySnapshot>(
               stream: _diariesStream,
               builder: (BuildContext context,

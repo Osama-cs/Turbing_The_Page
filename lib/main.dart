@@ -5,6 +5,7 @@ import 'package:individualproject/db/firebaseservices.dart';
 import 'package:individualproject/src/homepage.dart';
 import 'package:provider/provider.dart';
 import 'src/loginpage.dart';
+import 'package:dcdg/dcdg.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

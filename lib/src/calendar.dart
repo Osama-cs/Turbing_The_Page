@@ -8,6 +8,8 @@ import 'package:table_calendar/table_calendar.dart';
 import 'gpnearme.dart';
 import 'helplinespage.dart';
 
+//This is the dart class that makes the calender, so the user can view it and write they're mood.
+//Here we are using the dependency called table calender, to implement the calender.
 class Calendar extends StatefulWidget {
   const Calendar({Key? key}) : super(key: key);
 

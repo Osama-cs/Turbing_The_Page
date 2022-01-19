@@ -9,6 +9,8 @@ class HelplinesPage extends StatefulWidget {
   _HelplinesPageState createState() => _HelplinesPageState();
 }
 
+//This is a basic page that shows different mental health helplines.
+
 class _HelplinesPageState extends State<HelplinesPage> {
   @override
   Widget build(BuildContext context) {

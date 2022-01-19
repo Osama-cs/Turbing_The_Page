@@ -10,6 +10,7 @@ class WriteATodoList extends StatefulWidget {
   _WriteATodoListState createState() => _WriteATodoListState();
 }
 
+//This page allows the user to write a to-do list.
 class _WriteATodoListState extends State<WriteATodoList> {
   final _formKey3 = GlobalKey<FormState>();
 
@@ -130,6 +131,7 @@ class _WriteATodoListState extends State<WriteATodoList> {
                       ),
                       ElevatedButton(
                         onPressed: () async {
+                          //this is where the data from the text controllers, gets uploaded to firebase firestore.
                           if (_formKey3.currentState!.validate()) {
                             final String todoStartOfActivity =
                                 _startOfActivityController.text.trim();

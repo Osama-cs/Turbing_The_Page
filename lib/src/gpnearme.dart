@@ -9,6 +9,7 @@ class GPNearMePage extends StatefulWidget {
   _GPNearMePageState createState() => _GPNearMePageState();
 }
 
+//This page is where the you can view the map to see where the closet GP or counsellor.
 class _GPNearMePageState extends State<GPNearMePage> {
   late GoogleMapController mapController;
 

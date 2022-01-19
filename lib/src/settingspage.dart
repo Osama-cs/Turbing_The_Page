@@ -11,6 +11,7 @@ class SettingsPage extends StatefulWidget {
   _SettingsPageState createState() => _SettingsPageState();
 }
 
+//This page logouts out the user.
 class _SettingsPageState extends State<SettingsPage> {
   User? firebaseUser = FirebaseAuth.instance.currentUser;
 

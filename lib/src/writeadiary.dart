@@ -10,6 +10,7 @@ class WriteADiary extends StatefulWidget {
   _WriteADiaryState createState() => _WriteADiaryState();
 }
 
+//This page allows the user to write a diary.
 class _WriteADiaryState extends State<WriteADiary> {
   final _formKey2 = GlobalKey<FormState>();
 
@@ -121,6 +122,7 @@ class _WriteADiaryState extends State<WriteADiary> {
                             )
                           : ElevatedButton(
                               onPressed: () async {
+                                //this is where the data from the text controllers, gets uploaded to firebase firestore.
                                 if (_formKey2.currentState!.validate()) {
                                   final String diaryTime =
                                       _timeController.text.trim();
